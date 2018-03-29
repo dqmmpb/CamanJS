@@ -8,6 +8,7 @@ if exports?
 
   fs = require 'fs'
   http = require 'http'
+  https = require('https')
 else
   Root = window
 
@@ -242,7 +243,10 @@ class Caman extends Module
   readFromHttp: (url, callback) ->
     Log.debug "Fetching image from #{url}"
 
-    req = http.get url, (res) ->
+    # https or http
+    @client = url.match(/^https:\/\//) ? https : http
+
+    req = client.get url, (res) ->
       buf = ''
       res.setEncoding('binary')
       res.on 'data', (chunk) ->
