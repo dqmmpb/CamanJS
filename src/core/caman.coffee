@@ -244,7 +244,11 @@ class Caman extends Module
     Log.debug "Fetching image from #{url}"
 
     # https or http
-    @client = url.match(/^https:\/\//) ? https : http
+    @client = null
+    if url.match(/^https:\/\//)
+      @client = https
+    else
+      @client = http
 
     req = @client.get url, (res) ->
       buf = ''

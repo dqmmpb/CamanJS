@@ -362,11 +362,14 @@
     };
 
     Caman.prototype.readFromHttp = function(url, callback) {
-      var ref, req;
+      var req;
       Log.debug("Fetching image from " + url);
-      this.client = (ref = url.match(/^https:\/\//)) != null ? ref : {
-        https: http
-      };
+      this.client = null;
+      if (url.match(/^https:\/\//)) {
+        this.client = https;
+      } else {
+        this.client = http;
+      }
       req = this.client.get(url, function(res) {
         var buf;
         buf = '';
