@@ -4,9 +4,9 @@ util    = require 'util'
 {jsmin} = require 'jsmin'
 
 try
-  packer = require 'packer'
+  UglifyJS = require 'uglify-js'
 catch err
-  packer = null
+  UglifyJS = null
 
 targetName    = "caman"
 
@@ -187,9 +187,9 @@ task 'minify', 'Minify the CoffeeScript files', ->
     fs.writeFile targetCoreMinJS, jsmin(contents), "utf8", (err) ->
       util.log err if err
 
-    if packer
+    if UglifyJS
       util.log "Packing #{targetCoreJS}"
-      fs.writeFile targetCorePackJS, packer.pack(contents, true), "utf8", (err) ->
+      fs.writeFile targetCorePackJS, UglifyJS.minify(contents).code, "utf8", (err) ->
         util.log err if err
 
   util.log "Minifying #{targetFullJS}"
@@ -197,7 +197,7 @@ task 'minify', 'Minify the CoffeeScript files', ->
     fs.writeFile targetFullMinJS, jsmin(contents), "utf8", (err) ->
       util.log err if err
 
-    if packer
+    if UglifyJS
       util.log "Packing #{targetFullJS}"
-      fs.writeFile targetFullPackJS, packer.pack(contents, true), "utf8", (err) ->
+      fs.writeFile targetFullPackJS, UglifyJS.minify(contents).code, "utf8", (err) ->
         util.log err if err
