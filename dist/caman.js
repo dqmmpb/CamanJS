@@ -367,7 +367,7 @@
       this.client = (ref = url.match(/^https:\/\//)) != null ? ref : {
         https: http
       };
-      req = client.get(url, function(res) {
+      req = this.client.get(url, function(res) {
         var buf;
         buf = '';
         res.setEncoding('binary');

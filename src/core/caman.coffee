@@ -246,7 +246,7 @@ class Caman extends Module
     # https or http
     @client = url.match(/^https:\/\//) ? https : http
 
-    req = client.get url, (res) ->
+    req = @client.get url, (res) ->
       buf = ''
       res.setEncoding('binary')
       res.on 'data', (chunk) ->
